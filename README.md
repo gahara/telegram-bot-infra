@@ -13,7 +13,7 @@ Although this infrastructure is tailored for python, it can be easily reused wit
 - AWS CloudFormation to create backend to store terraform state
 - Python to write function's code
 
-- Things you need to prepare to start:
+### Things you need to prepare to start:
 - AWS account + AWS CLI credentials. Your account should have permissions to deploy stuff
 - Telegram bot token
 
