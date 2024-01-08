@@ -1,0 +1,26 @@
+AWSTemplateFormatVersion: 2010-09-09
+## =================== DESCRIPTION =================== ##
+Description: ---
+  AWS CloudFormation S3 bucket template
+  - Create a new S3 bucket without policy
+Parameters:
+  S3BucketName:
+    Description: Name of s3 bucket
+    Type: String
+  S3Tag:
+    Description: Tag for s3 bucket
+    Type: String
+    Default: bot-lambda-insides
+
+Resources:
+  BotS3Bucket:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      BucketName: !Ref S3BucketName
+      Tags:
+        - Key: 'name'
+          Value: !Ref S3Tag
+Outputs:
+  bucketName:
+    Value: !Ref BotS3Bucket
+    Description: testing bucket description
