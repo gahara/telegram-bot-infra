@@ -42,7 +42,7 @@ Run
 to create storage for terraform state.  
 Check `variables.tf` for other variables you need to provide. Note that terraform will search for 
 environmental variables starting with `TF_VAR`. Also provide backend configuration when running terraform
-Then run 
+Then run  
 `terraform init`  
 `terraform apply`
 
