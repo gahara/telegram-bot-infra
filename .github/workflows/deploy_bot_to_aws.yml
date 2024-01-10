@@ -48,10 +48,12 @@ jobs:
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: 1.6.5
+      - name: "Make shell script executable"
+        run: chmod +x ./iac/tf-modules/api-resources/collect-env-params.sh
+
       - name: "Terraform init"
         working-directory: ./iac
         run: terraform -chdir=./tf-core init -upgrade=true -reconfigure -backend-config=../tf-vars/backend.tf
-        
 
       - name: "Terraform validate"
         working-directory: ./iac

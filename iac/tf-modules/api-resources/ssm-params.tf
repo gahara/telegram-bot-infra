@@ -9,24 +9,24 @@ locals {
 }
 
 data "aws_kms_key" "main" {
-  key_id = "alias/${local.resource_name_prefix}"
+  key_id = "alias/aws/lambda"
 }
 
 resource "aws_ssm_parameter" "main" {
   for_each = var.ssm_params # replace with local.ssm_params
-  name     = "${local.param_key_prefix}/${each.key}"
+  name     = "/${local.param_key_prefix}/${each.key}"
   type     = each.value.type
 
-  key_id = (each.value.type == "SecureString") ? data.aws_kms_key.main.key_id : null
+#  TODO: key_id = (each.value.type == "SecureString") ? data.aws_kms_key.main.key_id : null
 
   # 1st preference: if value is defined in the tfpars.
   # 2nd preference: if value is defined in the env.
   # If value is missing in both the places. TF plan fails.
-  value = try(length(each.value.value) > 0, false) ? each.value.value : data.external.env.result[upper(replace("TF_VARS_${local.param_value_prefix}_${each.key}"), "-", "_")]
+  value = try(length(each.value.value) > 0, false) ? each.value.value : data.external.env.result[upper(replace("TF_VAR_${local.param_value_prefix}_${each.key}", "-", "_"))]
 
   depends_on = [data.external.env]
 }
 
 data "aws_ssm_parameters_by_path" "main" {
-  path = local.param_key_prefix
+  path = "/${local.param_key_prefix}"
 }

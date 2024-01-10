@@ -16,7 +16,7 @@ resource "null_resource" "lambda_layer" {
       python --version
 
       cd ${local.tmp_layer_path}/python
-      pip install -r ../"${local.lambda_src_dir}/requirements.txt" --only-binary=:all: --python-version 3.11 --platform manylinux2014_x86_64 -t python > /dev/null
+      pip install -r ../../"${local.lambda_src_dir}/requirements.txt" --only-binary=:all: --python-version 3.11 --platform manylinux2014_x86_64 -t python > /dev/null
 
       zip -r ${local.layer_zip_file_name} python > /dev/null
 

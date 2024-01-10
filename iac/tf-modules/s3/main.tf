@@ -1,6 +1,6 @@
 # Модуль чтобы сделать С3 переиспользуемым
 resource "aws_s3_bucket" "main" {
-  bucket              = "${local.resource_name_prefix}-${var.bucket_name}"
+  bucket              = lower("${local.resource_name_prefix}-${var.bucket_name}")
   object_lock_enabled = false
   tags                = merge({
     "Name" = "${local.resource_name_prefix}-${var.bucket_name}"
