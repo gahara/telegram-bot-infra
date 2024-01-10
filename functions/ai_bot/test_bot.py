@@ -16,7 +16,7 @@ for parameter in ssm_parameters.get('Parameters'):
     secrets[name] = value
 
 
-application = ApplicationBuilder().token(secrets['telegram_token']).build()
+application = ApplicationBuilder().token(secrets['/testbot/prod/ai_bot/telegram_token']).build()
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
