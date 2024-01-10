@@ -54,6 +54,7 @@ jobs:
         
 
       - name: "Terraform validate"
+        working-directory: ./iac
         run: terraform -chdir=./tf-core validate --var-file=../tf-vars/params.tfvars
 
       - name: "Terraform plan"
