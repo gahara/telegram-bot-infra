@@ -22,7 +22,7 @@ resource "aws_ssm_parameter" "main" {
   # 1st preference: if value is defined in the tfpars.
   # 2nd preference: if value is defined in the env.
   # If value is missing in both the places. TF plan fails.
-  value = try(length(each.value.value) > 0, false) ? each.value.value : data.external.env.result[upper(replace("TF_VAR_${local.param_value_prefix}_${each.key}", "-", "_"))]
+  value = try(length(each.value.value) > 0, false) ? each.value.value : data.external.env.result[(replace("TF_VAR_${each.key}", "-", "_"))]
 
   depends_on = [data.external.env]
 }
