@@ -20,8 +20,3 @@ variable "resource_region" {
   type        = string
   description = "Region in which create resources"
 }
-
-#variable "telegram_token" {
-#  type        = string
-#  description = "Token for telegram bot"
-#}

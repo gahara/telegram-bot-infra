@@ -17,8 +17,6 @@ resource "aws_ssm_parameter" "main" {
   name     = "/${local.param_key_prefix}/${each.key}"
   type     = each.value.type
 
-#  TODO: key_id = (each.value.type == "SecureString") ? data.aws_kms_key.main.key_id : null
-
   # 1st preference: if value is defined in the tfpars.
   # 2nd preference: if value is defined in the env.
   # If value is missing in both the places. TF plan fails.
