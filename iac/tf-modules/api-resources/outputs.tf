@@ -3,5 +3,5 @@ output "fun_url" {
 }
 
 output "fun_arn" {
-  value = aws_labda_function_url.webhook_url.arn
+  value = aws_lambda_function_url.webhook_url.function_arn
 }

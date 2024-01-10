@@ -1,6 +1,6 @@
 locals {
   account_id = data.aws_caller_identity.current.account_id
-  region     = data.aws_region_current_name
+  region     = data.aws_region.current.name
 
   resource_name_prefix = "${title(var.project)}-${title(var.env)}"
   name                 ="${local.resource_name_prefix}-${title(var.name)}"
