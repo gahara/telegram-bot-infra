@@ -49,8 +49,12 @@ jobs:
         with:
           terraform_version: 1.6.5
       - name: "Terraform init"
-        run: terraform -chdir=./tf-core init -upgrade=true -reconfigure -backend-config=../tf-vars/backend.tf
         working-directory: ./iac
+        run: | 
+          ls
+          pwd
+          terraform -chdir=./tf-core init -upgrade=true -reconfigure -backend-config=../tf-vars/backend.tf
+        
 
       - name: "Terraform validate"
         run: terraform -chdir=./tf-core validate --var-file=../tf-vars/params.tfvars
