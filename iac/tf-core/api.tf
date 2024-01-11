@@ -3,6 +3,8 @@ module "api_resources" {
 
   project = var.project
   env     = var.env
+  policy_name = var.policy_name
+  role_name = var.role_name
 
   # module specific
   for_each              = var.api_resources

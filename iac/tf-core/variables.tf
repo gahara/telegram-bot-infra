@@ -16,6 +16,14 @@ variable "env" {
   type = string
 }
 
+variable "policy_name" {
+  type = string
+}
+
+variable "role_name" {
+  type = string
+}
+
 variable "resource_region" {
   type        = string
   description = "Region in which create resources"
