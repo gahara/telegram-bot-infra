@@ -3,12 +3,12 @@ locals {
   region     = data.aws_region.current.name
 
   resource_name_prefix = "${title(var.project)}-${title(var.env)}"
-  name                 ="${local.resource_name_prefix}-${title(var.name)}"
+  name                 = "${local.resource_name_prefix}-${title(var.name)}"
 
-  layer_zip_file_name  = "${local.name}-layer.zip"
-  tmp_layer_path = "../temp/${local.name}"
+  layer_zip_file_name = "${local.name}-layer.zip"
+  tmp_layer_path      = "../temp/${local.name}"
 
-  lambda_src_dir = "../../functions/${var.name}"
+  lambda_src_dir       = "../../functions/${var.name}"
   lambda_zip_file_name = "${local.name}-func.zip"
 }
 

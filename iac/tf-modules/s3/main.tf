@@ -2,7 +2,7 @@
 resource "aws_s3_bucket" "main" {
   bucket              = lower("${local.resource_name_prefix}-${var.bucket_name}")
   object_lock_enabled = false
-  tags                = merge({
+  tags = merge({
     "Name" = "${local.resource_name_prefix}-${var.bucket_name}"
   })
 }

@@ -8,7 +8,7 @@ variable "api_resources" {
     environment_variables = map(string)
     layer_create          = bool
     layer_powertools      = optional(string)
-    ssm_params            = optional(map(object({
+    ssm_params = optional(map(object({
       type  = string
       value = optional(string)
     })))

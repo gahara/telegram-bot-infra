@@ -8,7 +8,6 @@ default_tags = {
   "with-love" = "from @gahara"
 }
 
-
 api_resources = {
   "ai_bot" = {
     handler      = "test_bot.lambda_handler"

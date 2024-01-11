@@ -1,9 +1,8 @@
-# creates zip file from requirements.txt. Triggered by updating the file
+#Creates zip file from requirements.txt. Triggered by updating the file
 resource "null_resource" "lambda_layer" {
   count = var.layer_create ? 1 : 0
 
   triggers = {
-    # чтобы можно было requirements.txt не в корне хранить
     requirements = filesha1("${local.lambda_src_dir}/requirements.txt")
   }
 
@@ -33,9 +32,9 @@ data "aws_s3_object" "layer_zip" {
   depends_on = [null_resource.lambda_layer]
 }
 
-# create layer for s3
+# Create lambda layer in S3
 resource "aws_lambda_layer_version" "lambda_layer" {
-  count               = var.layer_create?1 : 0
+  count               = var.layer_create ? 1 : 0
   s3_bucket           = var.layer_bucket_name
   s3_key              = "lambda_layers/${local.name}/${local.layer_zip_file_name}"
   layer_name          = local.name
@@ -88,7 +87,7 @@ data "aws_iam_policy_document" "tg_bot_lambda_policy_doc" {
     effect = "Allow"
   }
   statement {
-    sid     = "VolumeEncryption"
+    sid = "VolumeEncryption"
     actions = [
       "kms:Encrypt",
       "kms:Decrypt",
@@ -110,6 +109,7 @@ resource "aws_iam_role_policy_attachment" "attach_iam_policy_to_iam_role" {
   policy_arn = aws_iam_policy.iam_policy_for_tg_bot_lambda.arn
 }
 
+#Pack lambda function code
 data "archive_file" "lambda" {
   type        = "zip"
   source_dir  = local.lambda_src_dir
@@ -128,7 +128,7 @@ resource "aws_lambda_function" "webhook_url" {
 
   runtime = var.runtime
   timeout = var.timeout
-  layers  = concat(
+  layers = concat(
     var.layer_create == true ? [aws_lambda_layer_version.lambda_layer[0].arn] : [var.layer_powertools]
   )
 
