@@ -38,7 +38,8 @@ Values will be provided from `params.tfvars`.
 The tricky part is filling in SSM-parameters. SSM-parameters usually are those you want to hide, so in naturally you don't want to store them in plaintext.
 In `params.tfvars` add your variable name, for example `secret_token`. In GitHub repository add a secret with the name `TF_VAR_SECRET_TOKEN`.
 GitHub will make it uppercase regardless of how it was originally named. But it's ok, as an expression in `ssm-params.tf` will
-search for variables with pattern `TF_VAR_<variables_described_in_params_to_uppercase>`. 
+search for variables with pattern `TF_VAR_<variables_described_in_params_to_uppercase>`.   
+Cloudformation creates bucket vars.S3BUCKETNAME to store tfstate. Use the same name in `backend.tf`
 
 
 ### How to:
