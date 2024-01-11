@@ -146,7 +146,7 @@ resource "aws_lambda_function" "webhook_url" {
 }
 
 resource "aws_lambda_function_url" "webhook_url" {
-  function_name      = aws_lambda_function.webhook_url.function_name
+  function_name      = aws_lambda_function.webhook_url.arn
   authorization_type = "NONE"
 
   depends_on = [aws_lambda_function.webhook_url]
