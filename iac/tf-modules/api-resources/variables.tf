@@ -59,3 +59,13 @@ variable "ssm_params" {
   }))
   default = {}
 }
+
+variable "policy_name" {
+  type = string
+  default = "bot_policy"
+}
+
+variable "role_name" {
+  type = string
+  default = "bot_role"
+}

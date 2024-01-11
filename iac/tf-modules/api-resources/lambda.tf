@@ -45,7 +45,7 @@ resource "aws_lambda_layer_version" "lambda_layer" {
 }
 
 resource "aws_iam_role" "tg_bot_lambda_role" {
-  name               = "tg_Bot_Lambda_Function_Role"
+  name               = var.role_name
   assume_role_policy = <<EOF
 {
  "Version": "2012-10-17",
@@ -98,7 +98,7 @@ data "aws_iam_policy_document" "tg_bot_lambda_policy_doc" {
 }
 
 resource "aws_iam_policy" "iam_policy_for_tg_bot_lambda" {
-  name        = "aws_iam_policy_for_tg_bot_lambda"
+  name        = var.policy_name
   path        = "/"
   description = "AWS IAM Policy for managing aws lambda role"
   policy      = data.aws_iam_policy_document.tg_bot_lambda_policy_doc.json

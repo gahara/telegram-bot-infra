@@ -8,6 +8,11 @@ default_tags = {
   "with-love" = "from @gahara"
 }
 
+
+policy_name = "aws_iam_test_bot_policy"
+
+role_name = "aws_iam_test_bot_role"
+
 api_resources = {
   "ai_bot" = {
     handler      = "test_bot.lambda_handler"
