@@ -8,10 +8,6 @@ locals {
   ssm_params         = (var.ssm_params == null) ? {} : var.ssm_params
 }
 
-data "aws_kms_key" "main" {
-  key_id = "alias/aws/lambda"
-}
-
 resource "aws_ssm_parameter" "main" {
   for_each = var.ssm_params # replace with local.ssm_params
   name     = "/${local.param_key_prefix}/${each.key}"
