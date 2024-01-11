@@ -19,9 +19,3 @@ module "api_resources" {
 
   layer_bucket_name = module.s3_bucket_layer.bucket_name["layer-artifacts"]
 }
-#
-#data "aws_lambda_function_url" "urls" {
-#  for_each      = var.api_resources
-#  function_name = "${local.resource_name_prefix}-${(each.key)}"
-#  depends_on    = [module.api_resources]
-#}

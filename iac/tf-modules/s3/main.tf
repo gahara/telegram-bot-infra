@@ -1,4 +1,4 @@
-# Модуль чтобы сделать С3 переиспользуемым
+# Reusable S3 module
 resource "aws_s3_bucket" "main" {
   bucket              = lower("${local.resource_name_prefix}-${var.bucket_name}")
   object_lock_enabled = false
@@ -8,7 +8,7 @@ resource "aws_s3_bucket" "main" {
 }
 
 resource "aws_s3_bucket_public_access_block" "bucket_block_public_access" {
-  bucket                  = aws_s3_bucket.main.id # указывает на сущность вверху
+  bucket                  = aws_s3_bucket.main.id
   block_public_acls       = true
   block_public_policy     = true
   ignore_public_acls      = true
@@ -16,7 +16,7 @@ resource "aws_s3_bucket_public_access_block" "bucket_block_public_access" {
 }
 
 resource "aws_s3_bucket_versioning" "bucket_versioning" {
-  bucket = aws_s3_bucket.main.id # указывает на сущность вверху
+  bucket = aws_s3_bucket.main.id
 
   versioning_configuration {
     status = var.bucket_versioning_enabled
