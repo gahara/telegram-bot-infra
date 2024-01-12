@@ -7,7 +7,7 @@ from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler, Messa
 ssm_client = boto3.client('ssm')
 
 
-ssm_parameters = ssm_client.get_parameters(Names=['telegram_token'], WithDecryption=True)
+ssm_parameters = ssm_client.get_parameters(Names=['/testbot/prod/ai_bot/telegram_token'], WithDecryption=True)
 secrets = {}
 
 for parameter in ssm_parameters.get('Parameters'):
@@ -16,7 +16,7 @@ for parameter in ssm_parameters.get('Parameters'):
     secrets[name] = value
 
 
-application = ApplicationBuilder().token(secrets['telegram_token']).build()
+application = ApplicationBuilder().token(secrets['/testbot/prod/ai_bot/telegram_token']).build()
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):

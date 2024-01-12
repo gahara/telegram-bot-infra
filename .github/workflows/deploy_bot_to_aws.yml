@@ -6,7 +6,6 @@ on:
       - "v*"
 env:
   TF_VAR_TELEGRAM_TOKEN: ${{ secrets.TF_VAR_TELEGRAM_TOKEN }}
-  TF_VAR_LAMBDA_BUCKET_NAME: ${{ secrets.TF_VAR_LAMBDA_BUCKET_NAME }}
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   AWS_REGION: ${{ vars.TFBACKENDREGION }}
@@ -29,7 +28,6 @@ jobs:
         uses: unfor19/install-aws-cli-action@master
         with:
           version: 2
-      - run: aws s3api head-bucket --bucket ${{ vars.S3BUCKETNAME }}
       - run: |
           if aws s3api head-bucket --bucket ${{ vars.S3BUCKETNAME }} 2>& 1 | grep 'Not';
           then  echo "NEED_RUN_CREATE_BUCKET=YES" >> $GITHUB_ENV
@@ -43,21 +41,28 @@ jobs:
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
           name: ${{ vars.S3STACKNAME}}
-          template: create_s3.yaml
+          template: ./iac/aws-cloudformation/create_s3.yaml
           parameter-overrides: "S3BucketName=${{ vars.S3BUCKETNAME }},S3Tag=${{ vars.S3TAG }}"
 
       - name: "Setup Terraform"
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: 1.6.5
+
       - name: "Terraform init"
-        run: terraform init --upgrade -backend-config="bucket=${{ vars.S3BUCKETNAME }}" -backend-config="key=${{ secrets.TFBACKENDKEY }}" -backend-config="region=${{ vars.TFBACKENDREGION }}"
+        working-directory: ./iac
+        run: terraform -chdir=./tf-core init -upgrade=true -reconfigure -backend-config=../tf-vars/backend.tf
 
       - name: "Terraform validate"
-        run: terraform validate
-        continue-on-error: false
+        working-directory: ./iac
+        run: terraform -chdir=./tf-core validate
+
       - name: "Terraform plan"
-        run: terraform plan
+        working-directory: ./iac
+        run: terraform -chdir=./tf-core plan -var-file=../tf-vars/params.tfvars
+
 
       - name: "Terraform apply"
-        run: terraform apply --auto-approve
+        working-directory: ./iac
+        run: terraform -chdir=./tf-core apply -var-file=../tf-vars/params.tfvars --auto-approve
+
